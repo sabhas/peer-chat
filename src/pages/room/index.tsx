@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import cameraIcon from "../../icons/camera.png"
 import micIcon from "../../icons/mic.png"
 import phoneIcon from "../../icons/phone.png"
@@ -12,6 +12,8 @@ const commonPropsForVideoTag = {
 }
 
 export const Room = () => {
+  const { roomId } = useParams()
+
   return (
     <>
       <div id="videos">
