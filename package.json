@@ -6,17 +6,20 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "host": "vite --host"
   },
   "dependencies": {
-    "agora-rtc-sdk-ng": "4.15.1",
+    "agora-rtm-sdk": "^1.6.0-205",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "6.4.4"
+    "react-router-dom": "6.4.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
+    "@types/uuid": "^9.0.0",
     "@vitejs/plugin-react": "^2.2.0",
     "typescript": "^4.6.4",
     "vite": "^3.2.3"
