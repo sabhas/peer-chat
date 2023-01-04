@@ -1,0 +1,41 @@
+name: Build App and Push gh-pages Branch
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  VITE_API_ID: ${{ secrets.AGORA_APP_ID }}
+
+jobs:
+  generate_and_push_docs:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [lts/fermium]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: create build
+        run: npm run build
+
+      - name: Push created build
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          cname: peer-chat.sabhas.me
