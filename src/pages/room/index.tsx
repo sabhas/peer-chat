@@ -93,7 +93,7 @@ export const Room = () => {
 
     peerConnection.onicecandidate = async (event) => {
       if (event.candidate) {
-        client.sendMessageToPeer(
+        await client.sendMessageToPeer(
           {
             text: JSON.stringify({
               type: 'candidate',
@@ -110,23 +110,23 @@ export const Room = () => {
     message = JSON.parse(message.text)
 
     if (message.type === 'offer') {
-      createAnswer(memberId, message.offer)
+      await createAnswer(memberId, message.offer)
     }
 
     if (message.type === 'answer') {
-      addAnswer(message.answer)
+      await addAnswer(message.answer)
     }
 
     if (message.type === 'candidate') {
       if (peerConnection) {
-        peerConnection.addIceCandidate(message.candidate)
+        await peerConnection.addIceCandidate(message.candidate)
       }
     }
   }
 
   const handleUserJoined = async (memberId: string) => {
     console.log('A new user joined the channel:', memberId)
-    createOffer(memberId)
+    await createOffer(memberId)
   }
 
   const createOffer = async (memberId: string) => {
@@ -135,7 +135,7 @@ export const Room = () => {
     const offer = await peerConnection.createOffer()
     await peerConnection.setLocalDescription(offer)
 
-    client.sendMessageToPeer(
+    await client.sendMessageToPeer(
       { text: JSON.stringify({ type: 'offer', offer: offer }) },
       memberId
     )
@@ -152,7 +152,7 @@ export const Room = () => {
     const answer = await peerConnection.createAnswer()
     await peerConnection.setLocalDescription(answer)
 
-    client.sendMessageToPeer(
+    await client.sendMessageToPeer(
       { text: JSON.stringify({ type: 'answer', answer: answer }) },
       memberId
     )
@@ -160,7 +160,7 @@ export const Room = () => {
 
   const addAnswer = async (answer: RTCSessionDescriptionInit) => {
     if (!peerConnection.currentRemoteDescription) {
-      peerConnection.setRemoteDescription(answer)
+      await peerConnection.setRemoteDescription(answer)
     }
   }
 
