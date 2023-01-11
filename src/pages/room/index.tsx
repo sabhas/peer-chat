@@ -61,6 +61,7 @@ export const Room = () => {
     client.on('MessageFromPeer', handleMessageFromPeer)
 
     localStream = await navigator.mediaDevices.getUserMedia(constraints)
+    user1.current!.muted = true
     user1.current!.srcObject = localStream
   })
 
